@@ -54,7 +54,14 @@
 
   <script>
     function handlestart(e) {
-      alert(e.touches[0].clientX)
+      var area = document.getElementsByClassName('a-canvas')[0];
+      var offsetX = 0
+      var offsetY = 0
+      var containerWidth = window.innerWidth
+      var containerHeight = window.innerHeight
+      var x11 = (((x - offsetX) / containerWidth) * 2) - 1
+      var y11 = 1 - (((y - offsetY) / containerHeight) * 2)
+      alert(x11 + ' ' + y11)
     }
     document.getElementsByClassName('a-canvas')[0].addEventListener('touchstart', handlestart, false)
   </script>
