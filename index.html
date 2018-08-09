@@ -54,8 +54,7 @@
 
   <script>
     function handlestart(e) {
-      console.log(e)
-      alert(JSON.stringify(e))
+      alert(e.clientX + " " + e.clientY)
     }
     document.getElementsByClassName('a-canvas')[0].addEventListener('touchstart', handlestart, false)
   </script>
