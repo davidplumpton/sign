@@ -1,0 +1,63 @@
+<html>
+<!-- AR.js by @jerome_etienne - github: https://github.com/jeromeetienne/ar.js - info: https://medium.com/arjs/augmented-reality-in-10-lines-of-html-4e193ea9fdbf -->
+<!--
+<script src="https://aframe.io/releases/0.8.0/aframe.min.js"></script>
+<script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.5.5/aframe/build/aframe-ar.js"></script>
+-->
+<script src="aframe.min.js"></script>
+<script src="aframe-ar.js"></script>
+
+<body style='margin : 0px; overflow: hidden;'>
+  <a-scene embedded arjs='sourceType: webcam;'>
+
+    <a-assets>
+      <img id='title' src='images/title.png'>
+      <img id='fod' src='images/fod.png'>
+      <img id='status' src='images/status.png'>
+      <img id='fish1' src='images/fish1.jpg'>
+      <img id='fish2' src='images/fish2.jpg'>
+      <img id='fish3' src='images/fish3.jpg'>
+      <img id='fish4' src='images/fish4.jpg'>
+      <img id='fish5' src='images/fish5.jpg'>
+      <img id='directions' src='images/directions.png'>
+      <img id='special' src='images/special.png'>
+    </a-assets>
+
+    <a-marker-camera preset='custom' type='pattern' url='yourlogo.patt' cursor="rayOrigin: mouse">
+    </a-marker-camera>
+    <a-image src='#title' rotation='-90 0 0' position='0 0 -1'>
+    </a-image>
+    <a-image src='#fod' rotation='-90 0 0'>
+      <a-animation attribute='material.opacity' begin='2000' dur='4000' fill='forwards' to='0' repeat='indefinite'>
+        </a-animation>
+    </a-image>
+    <a-image src='#status' rotation='-90 0 0' position='1 0 -1'>
+    </a-image>
+    <a-image src='#fish1' rotation='-90 0 0'>
+      <a-animation attribute='material.opacity' begin='2000' dur='4000' fill='forwards' from='0' to='1' repeat='indefinite'>
+        </a-animation>
+    </a-image>
+    <a-image src='#fish3' rotation='-90 0 0'  position='1 0 0'>
+      <a-animation attribute='material.opacity' begin='3000' dur='4000' fill='forwards' to='0' repeat='indefinite'>
+        </a-animation>
+    </a-image>
+    <a-image src='#fish4' rotation='-90 0 0' position='1 0 0'>
+      <a-animation attribute='material.opacity' begin='3000' dur='4000' fill='forwards' from='0' to='1' repeat='indefinite'>
+        </a-animation>
+    </a-image>
+    <a-image src='#directions' rotation='-90 0 0' position='0 0 1'>
+    </a-image>
+    <a-image src='#special' rotation='-90 0 0' position='1 0 1'>
+    </a-image>
+
+  </a-scene>
+
+  <script>
+    function handlestart(e) {
+      console.log(e)
+    }
+    document.getElementsByClassName('a-canvas')[0].addEventListener('click', handlestart, false)
+  </script>
+
+</body>
+</html>
