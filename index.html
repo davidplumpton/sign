@@ -27,24 +27,32 @@
     </a-marker-camera>
     <a-image src='#title' rotation='-90 0 0' position='0 0 -1'>
     </a-image>
-    <a-image src='#fod' rotation='-90 0 0'>
+    <a-image src='#fod' rotation='-90 0 0' opacity='0.8'>
+      <!--
       <a-animation attribute='material.opacity' begin='2000' dur='4000' fill='forwards' to='0' repeat='indefinite'>
         </a-animation>
+-->
     </a-image>
+    <!--
     <a-image src='#status' rotation='-90 0 0' position='1 0 -1'>
     </a-image>
     <a-image src='#fish1' rotation='-90 0 0'>
       <a-animation attribute='material.opacity' begin='2000' dur='4000' fill='forwards' from='0' to='1' repeat='indefinite'>
         </a-animation>
     </a-image>
+  -->
     <a-image src='#fish3' rotation='-90 0 0'  position='1 0 0'>
+      <!--
       <a-animation attribute='material.opacity' begin='3000' dur='4000' fill='forwards' to='0' repeat='indefinite'>
         </a-animation>
+      -->
     </a-image>
+    <!--
     <a-image src='#fish4' rotation='-90 0 0' position='1 0 0'>
       <a-animation attribute='material.opacity' begin='3000' dur='4000' fill='forwards' from='0' to='1' repeat='indefinite'>
         </a-animation>
     </a-image>
+  -->
     <a-image src='#directions' rotation='-90 0 0' position='0 0 1'>
     </a-image>
     <a-image src='#special' rotation='-90 0 0' position='1 0 1'>
@@ -54,8 +62,15 @@
 
   <script>
     function handlestart(e) {
-      var x = e.touches[0].clientX
-      var y = e.touches[0].clientY
+      var x
+      var y
+      if (e.touches) {
+      x = e.touches[0].clientX
+      y = e.touches[0].clientY
+    } else {
+      x = e.clientX
+      y = e.clientY
+    }
       var area = document.getElementsByClassName('a-canvas')[0];
       var offsetX = 0
       var offsetY = 0
@@ -63,9 +78,22 @@
       var containerHeight = window.innerHeight
       var x11 = (((x - offsetX) / containerWidth) * 2) - 1
       var y11 = 1 - (((y - offsetY) / containerHeight) * 2)
-      alert(x11 + ' ' + y11)
+
+      var raycaster = new THREE.Raycaster()
+      var pointingVector = new THREE.Vector2(x11, y11)
+      var scene = document.querySelector('a-scene')
+      var scene3 = scene.object3D
+      var camera = scene.camera
+      // var frame3 = document.querySelector('#frame').object3D
+      raycaster.setFromCamera(pointingVector, camera)
+      var found = raycaster.intersectObjects(scene3.children, true)
+      if (found.length > 0) {
+        console.log(found[0].object)
+        found[0].object.material.visible = false
+      }
     }
     document.getElementsByClassName('a-canvas')[0].addEventListener('touchstart', handlestart, false)
+    document.getElementsByClassName('a-canvas')[0].addEventListener('click', handlestart, false)
   </script>
 
 </body>
