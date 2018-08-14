@@ -23,53 +23,55 @@
       <img id='special' src='images/special.png'>
     </a-assets>
 
-    <a-marker-camera preset='custom' type='pattern' url='yourlogo.patt' cursor="rayOrigin: mouse">
+    <a-marker-camera preset='custom' type='pattern' url='yourlogo.patt' cursor="rayOrigin: mouse" id='zzzzz'>
     </a-marker-camera>
     <a-image src='#title' rotation='-90 0 0' position='0 0 -1'>
     </a-image>
     <a-image src='#fod' rotation='-90 0 0'>
-      <!--
       <a-animation attribute='material.opacity' begin='2000' dur='4000' fill='forwards' to='0' repeat='indefinite'>
         </a-animation>
--->
     </a-image>
-    <!--
     <a-image src='#status' rotation='-90 0 0' position='1 0 -1'>
     </a-image>
     <a-image src='#fish1' rotation='-90 0 0'>
       <a-animation attribute='material.opacity' begin='2000' dur='4000' fill='forwards' from='0' to='1' repeat='indefinite'>
         </a-animation>
     </a-image>
-  -->
     <a-image src='#fish3' rotation='-90 0 0'  position='1 0 0'>
       <a-animation attribute='material.opacity' begin='3000' dur='4000' fill='forwards' to='0' repeat='indefinite'>
         </a-animation>
     </a-image>
-    <!--
     <a-image src='#fish4' rotation='-90 0 0' position='1 0 0'>
       <a-animation attribute='material.opacity' begin='3000' dur='4000' fill='forwards' from='0' to='1' repeat='indefinite'>
         </a-animation>
     </a-image>
-  -->
     <a-image src='#directions' rotation='-90 0 0' position='0 0 1'>
     </a-image>
-    <a-image src='#special' rotation='-90 0 0' position='1 0 1'>
+    <a-image src='#special' rotation='-90 0 0' position='2 0 2'>
     </a-image>
 
   </a-scene>
 
+  <canvas id='ccc'>
+  </canvas>
+
   <script>
-    function handlestart(e) {
+
+      function handlestart(e) {
       var x
       var y
       if (e.touches) {
-      x = e.touches[0].clientX
-      y = e.touches[0].clientY
-    } else {
-      x = e.clientX
-      y = e.clientY
-    }
+        x = e.touches[0].clientX
+        y = e.touches[0].clientY
+      } else {
+        x = e.clientX
+        y = e.clientY
+      }
       var area = document.getElementsByClassName('a-canvas')[0];
+      var scene = document.querySelector('a-scene')
+      var scene3 = scene.object3D
+      var camera = scene.camera
+
       var offsetX = 0
       var offsetY = 0
       var containerWidth = window.innerWidth
@@ -79,17 +81,21 @@
 
       var raycaster = new THREE.Raycaster()
       var pointingVector = new THREE.Vector2(x11, y11)
-      var scene = document.querySelector('a-scene')
-      var scene3 = scene.object3D
-      var camera = scene.camera
+      // camera.aspect = e.target.width / e.target.height
+      // camera.updateProjectionMatrix()
+      console.log(camera)
       // var frame3 = document.querySelector('#frame').object3D
       raycaster.setFromCamera(pointingVector, camera)
       var found = raycaster.intersectObjects(scene3.children, true)
+      console.log(x + ' ' + y + ' ' + window.innerWidth + ' ' + window.innerHeight + ' ' + x11 + ' ' + y11 + ' ' + found.length)
+      console.log('diff ' + (containerWidth - e.target.width) + ' ' + (containerHeight - e.target.height))
       if (found.length > 0) {
-        console.log(found[0].object)
-        found[0].object.material.visible = false
+        console.log('FOUND')
+      } else {
+        console.log('NOT FOUND')
       }
     }
+
     document.getElementsByClassName('a-canvas')[0].addEventListener('touchstart', handlestart, false)
     document.getElementsByClassName('a-canvas')[0].addEventListener('click', handlestart, false)
   </script>
