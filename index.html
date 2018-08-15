@@ -26,7 +26,7 @@
     <a-marker-camera preset='custom' type='pattern' url='yourlogo.patt' cursor="rayOrigin: mouse">
     </a-marker-camera>
 
-    <a-image src='#title' rotation='-90 0 0' position='0 0 -1'>
+    <a-image src='#title' rotation='-90 0 0' position='0 0 -1' data-clickurl='https://example.com'>
       <a-animation attribute='material.opacity' begin='2000' dur='5000' fill='forwards' from='1' to='0' repeat='indefinite'>
       </a-animation>
     </a-image>
@@ -83,12 +83,16 @@
       console.log(x + ' ' + y + ' ' + window.innerWidth + ' ' + window.innerHeight + ' ' + x11 + ' ' + y11 + ' ' + found.length)
       console.log('diff ' + (containerWidth - e.target.width) + ' ' + (containerHeight - e.target.height))
       if (found.length > 0) {
-        var obj = found[0].object.el
+        var intersected = found[0].object
+        var obj = intersected.el
         if (obj.clickNum) {
           if (++obj.clickNum > obj.maxNum) {
             obj.clickNum = 1
           }
           obj.setAttribute('src', '#' + obj.baseName + obj.clickNum)
+        }
+        if (obj.getAttribute('data-clickurl')) {
+          window.location = obj.getAttribute('data-clickurl')
         }
       }
     }
